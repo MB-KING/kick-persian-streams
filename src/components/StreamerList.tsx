@@ -84,26 +84,7 @@ const StreamerList: React.FC<StreamerListProps> = ({ streamers, filter, isLoadin
         </div>
       </div>
 
-      <div className="streamer-stats">
-        <div className="stat-item">
-          <span className="stat-label">کل استریمرها:</span>
-          <span className="stat-value">{streamers.length}</span>
-        </div>
-        <div className="stat-item">
-          <span className="stat-label">استریمرهای زنده:</span>
-          <span className="stat-value">{streamers.filter(s => s.isLive === true).length}</span>
-        </div>
-        <div className="stat-item">
-          <span className="stat-label">نمایش شده:</span>
-          <span className="stat-value">{filteredStreamers.length}</span>
-        </div>
-        {isLoading && (
-          <div className="stat-item">
-            <span className="stat-label">در حال بارگذاری:</span>
-            <span className="stat-value loading">...</span>
-          </div>
-        )}
-      </div>
+
 
       {filteredStreamers.length === 0 && !shouldShowSkeletons ? (
         <div className="no-results">
