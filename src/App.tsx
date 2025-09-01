@@ -28,8 +28,12 @@ function App() {
       setStreamers([])
       
       // Get streamer IDs
-      const streamerIds = ['Seenacrash', 'Keoxer', 'Farshadsilent', 'LastDudeStanding', 'Kamandd', 'AmirRight', 'DeejayFaren', 'AliBesi', 'Nichoqu', 'Siabach', 'AliDP', 'Erph', 'Eyzed', 'Heisenbergofficial', 'Nabbiltv', 'Mckellen', 'SamiraSaly', 'Fox_3pi']
-      const limit = 20
+      const streamerIds = [
+        'Seenacrash', 'Keoxer', 'Farshadsilent', 'LastDudeStanding', 'Kamandd', 'AmirRight', 'DeejayFaren', 'AliBesi', 'Nichoqu', 'Siabach', 'AliDP', 'Erph', 'Eyzed', 'Heisenbergofficial', 'Nabbiltv', 'Mckellen', 'SamiraSaly', 'Fox_3pi',
+        // New streamers from Streamfa API
+        'hesamhb', 'amirgrex', 'amadagha', '1godon', 'maryenigma', 'mohioow', 'ferisedast', 'alirezarenox', 'jojelittle', 'amirjavankabir', 'amirgodg', 'castieltv', 'alighiasi', 'rasa-heikali', 'hamiddragon', 'xanyaspy', 'sir-afrasiyab'
+      ]
+      const limit = 35
       const limitedIds = streamerIds.slice(0, limit)
       
       setLoadingProgress({ current: 0, total: limitedIds.length, failed: 0, retrying: 0 })
