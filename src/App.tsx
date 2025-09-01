@@ -38,6 +38,7 @@ function App() {
       
       const validStreamers: Streamer[] = []
       const failedUsernames: string[] = []
+      const retryAttempts = new Map<string, number>()
       
       // First pass: Try to load all streamers simultaneously
       console.log('Starting first pass: Loading all streamers simultaneously...')
@@ -56,6 +57,7 @@ function App() {
         } catch (error) {
           console.error(`Failed to fetch ${username}:`, error)
           failedUsernames.push(username)
+          retryAttempts.set(username, 1)
           setLoadingProgress(prev => ({ ...prev, failed: prev.failed + 1 }))
           return { username, success: false, error }
         }
@@ -64,24 +66,41 @@ function App() {
       // Wait for all first pass requests to complete
       await Promise.allSettled(loadPromises)
       
-      // Second pass: Retry failed usernames
-      if (failedUsernames.length > 0) {
-        console.log(`Second pass: Retrying ${failedUsernames.length} failed usernames...`)
+      // Retry failed usernames up to 3 times
+      let currentRetryRound = 1
+      const maxRetries = 3
+      
+      while (failedUsernames.length > 0 && currentRetryRound <= maxRetries) {
+        console.log(`Retry round ${currentRetryRound}: Retrying ${failedUsernames.length} failed usernames...`)
         setLoadingProgress(prev => ({ ...prev, retrying: failedUsernames.length }))
+        
+        const stillFailed: string[] = []
         
         for (let i = 0; i < failedUsernames.length; i++) {
           const username = failedUsernames[i]
+          const currentAttempts = retryAttempts.get(username) || 1
+          
           try {
-            console.log(`Retrying ${username} (${i + 1}/${failedUsernames.length})`)
+            console.log(`Retrying ${username} (attempt ${currentAttempts + 1}/${maxRetries + 1})`)
             const streamer = await kickApiService.getStreamerInfo(username)
             if (streamer) {
               validStreamers.push(streamer)
               setStreamers([...validStreamers])
               setLoadingProgress(prev => ({ ...prev, current: prev.current + 1, retrying: prev.retrying - 1 }))
+              console.log(`✅ Successfully loaded ${username} after ${currentAttempts + 1} attempts`)
+            } else {
+              throw new Error('No streamer data returned')
             }
           } catch (error) {
-            console.error(`Retry failed for ${username}:`, error)
-            setLoadingProgress(prev => ({ ...prev, retrying: prev.retrying - 1 }))
+            console.error(`Retry attempt ${currentAttempts + 1} failed for ${username}:`, error)
+            retryAttempts.set(username, currentAttempts + 1)
+            
+            if (currentAttempts + 1 <= maxRetries) {
+              stillFailed.push(username)
+            } else {
+              console.log(`❌ Giving up on ${username} after ${maxRetries + 1} attempts`)
+              setLoadingProgress(prev => ({ ...prev, retrying: prev.retrying - 1 }))
+            }
           }
           
           // Small delay between retry requests
@@ -89,13 +108,30 @@ function App() {
             await new Promise(resolve => setTimeout(resolve, 200))
           }
         }
+        
+        failedUsernames.length = 0
+        failedUsernames.push(...stillFailed)
+        currentRetryRound++
+      }
+      
+      // Log final results
+      const totalAttempted = limitedIds.length
+      const totalLoaded = validStreamers.length
+      const totalFailed = limitedIds.length - totalLoaded
+      
+      console.log(`📊 Final Results:`)
+      console.log(`   Total attempted: ${totalAttempted}`)
+      console.log(`   Successfully loaded: ${totalLoaded}`)
+      console.log(`   Failed after all retries: ${totalFailed}`)
+      
+      if (totalFailed > 0) {
+        const failedList = limitedIds.filter(id => !validStreamers.some(s => s.username === id))
+        console.log(`   Failed usernames: ${failedList.join(', ')}`)
       }
       
       setLastUpdated(new Date())
       setApiStatus('success')
       setLoadingProgress({ current: 0, total: 0, failed: 0, retrying: 0 })
-      
-      console.log(`Successfully loaded ${validStreamers.length} streamers out of ${limitedIds.length}`)
       
     } catch (err) {
       setError('خطا در بارگذاری استریمرها')
@@ -169,6 +205,7 @@ function App() {
             <StreamerList 
               streamers={streamers}
               filter={searchQuery}
+              isLoading={loading}
             />
           </>
         )}

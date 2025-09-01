@@ -20,4 +20,5 @@ export interface StreamerCardProps {
 export interface StreamerListProps {
   streamers: Streamer[];
   filter?: string;
+  isLoading?: boolean;
 }

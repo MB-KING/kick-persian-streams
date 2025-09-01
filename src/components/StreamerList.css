@@ -151,6 +151,21 @@
   font-size: 14px;
 }
 
+/* Loading indicator styles */
+.stat-value.loading {
+  color: #00ff88;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 1400px) {
   .streamer-grid {

@@ -3,7 +3,7 @@ import type { StreamerListProps } from '../types/Streamer';
 import StreamerCard from './StreamerCard';
 import './StreamerList.css';
 
-const StreamerList: React.FC<StreamerListProps> = ({ streamers, filter }) => {
+const StreamerList: React.FC<StreamerListProps> = ({ streamers, filter, isLoading = false }) => {
   const [sortBy, setSortBy] = useState<'viewers' | 'followers' | 'name'>('viewers');
   const [showOnlyLive, setShowOnlyLive] = useState(false);
 
@@ -50,9 +50,9 @@ const StreamerList: React.FC<StreamerListProps> = ({ streamers, filter }) => {
     ));
   };
 
-  // Show skeleton cards if we have less than 18 streamers (assuming we're loading 20)
-  const shouldShowSkeletons = streamers.length < 18;
-  const skeletonCount = 20 - streamers.length;
+  // Show skeleton cards when loading or if we have very few streamers
+  const shouldShowSkeletons = isLoading || streamers.length < 5;
+  const skeletonCount = isLoading ? 20 : Math.max(0, 20 - streamers.length);
 
   return (
     <div className="streamer-list-container">
@@ -97,10 +97,10 @@ const StreamerList: React.FC<StreamerListProps> = ({ streamers, filter }) => {
           <span className="stat-label">نمایش شده:</span>
           <span className="stat-value">{filteredStreamers.length}</span>
         </div>
-        {shouldShowSkeletons && (
+        {isLoading && (
           <div className="stat-item">
             <span className="stat-label">در حال بارگذاری:</span>
-            <span className="stat-value loading">{skeletonCount}</span>
+            <span className="stat-value loading">...</span>
           </div>
         )}
       </div>
