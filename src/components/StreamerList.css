@@ -27,22 +27,57 @@
   gap: 16px;
 }
 
+.filter-group {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 12px 16px;
+  transition: all 0.3s ease;
+}
+
+.filter-group:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
 .filter-label {
   display: flex;
   align-items: center;
-  gap: 8px;
-  color: #cccccc;
+  gap: 12px;
+  color: #ffffff;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
   font-family: 'Vazirmatn', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  transition: all 0.3s ease;
+}
+
+.filter-label:hover {
+  color: #00ff88;
+}
+
+.filter-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-icon {
+  font-size: 16px;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
 }
 
 .filter-label input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   accent-color: #00ff88;
-  border-radius: 4px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filter-label input[type="checkbox"]:checked {
+  transform: scale(1.1);
 }
 
 .sort-controls {
@@ -51,14 +86,33 @@
   gap: 12px;
 }
 
+.sort-group {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 12px 16px;
+  transition: all 0.3s ease;
+}
+
+.sort-group:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
 .sort-label {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #cccccc;
+  color: #ffffff;
   font-size: 14px;
   font-weight: 500;
   font-family: 'Vazirmatn', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  margin-bottom: 8px;
+}
+
+.sort-icon {
+  font-size: 16px;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
 }
 
 .sort-select {
@@ -174,6 +228,11 @@
     justify-content: center;
   }
   
+  .filter-group,
+  .sort-group {
+    padding: 10px 12px;
+  }
+  
   .streamer-grid {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 16px;
@@ -194,6 +253,11 @@
   
   .streamer-controls {
     padding: 12px;
+  }
+  
+  .filter-group,
+  .sort-group {
+    padding: 8px 10px;
   }
   
   .filter-label,

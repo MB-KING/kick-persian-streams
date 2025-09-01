@@ -58,29 +58,37 @@ const StreamerList: React.FC<StreamerListProps> = ({ streamers, filter, isLoadin
     <div className="streamer-list-container">
       <div className="streamer-controls">
         <div className="filter-controls">
-          <label className="filter-label">
-            <input
-              type="checkbox"
-              checked={showOnlyLive}
-              onChange={(e) => setShowOnlyLive(e.target.checked)}
-            />
-            فقط استریمرهای زنده
-          </label>
+          <div className="filter-group">
+            <label className="filter-label">
+              <input
+                type="checkbox"
+                checked={showOnlyLive}
+                onChange={(e) => setShowOnlyLive(e.target.checked)}
+              />
+              <span className="filter-text">
+                <span className="filter-icon">🔴</span>
+                فقط استریمرهای زنده
+              </span>
+            </label>
+          </div>
         </div>
         
         <div className="sort-controls">
-          <label className="sort-label">
-            مرتب‌سازی بر اساس:
+          <div className="sort-group">
+            <label className="sort-label">
+              <span className="sort-icon">📊</span>
+              مرتب‌سازی:
+            </label>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as 'viewers' | 'followers' | 'name')}
               className="sort-select"
             >
-              <option value="viewers">تعداد بینندگان</option>
-              <option value="followers">تعداد فالوورها</option>
-              <option value="name">نام</option>
+              <option value="viewers">👥 بیشترین بیننده</option>
+              <option value="followers">⭐ بیشترین فالوور</option>
+              <option value="name">🔤 نام الفبایی</option>
             </select>
-          </label>
+          </div>
         </div>
       </div>
 
