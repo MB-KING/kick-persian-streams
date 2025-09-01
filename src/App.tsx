@@ -16,6 +16,7 @@ function App() {
   const [lastUpdated, setLastUpdated] = useState(new Date())
   const [apiStatus, setApiStatus] = useState<'loading' | 'success' | 'error'>('loading')
   const [loadingProgress, setLoadingProgress] = useState({ current: 0, total: 0, failed: 0, retrying: 0 })
+  const [showStreamerRequest, setShowStreamerRequest] = useState(false)
 
   useEffect(() => {
     loadStreamers()
@@ -140,6 +141,7 @@ function App() {
         onSearch={handleSearch}
         totalStreamers={totalStreamers}
         liveStreamers={liveStreamers}
+        onRequestStreamer={() => setShowStreamerRequest(true)}
       />
       <main className="main-content">
         {loading ? (
@@ -160,7 +162,10 @@ function App() {
               lastUpdated={lastUpdated}
               apiStatus={apiStatus}
             />
-            <StreamerRequest />
+            <StreamerRequest 
+              isOpen={showStreamerRequest}
+              onClose={() => setShowStreamerRequest(false)}
+            />
             <StreamerList 
               streamers={streamers}
               filter={searchQuery}

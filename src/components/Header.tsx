@@ -5,9 +5,10 @@ interface HeaderProps {
   onSearch: (query: string) => void;
   totalStreamers: number;
   liveStreamers: number;
+  onRequestStreamer: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ onSearch, totalStreamers, liveStreamers }) => {
+const Header: React.FC<HeaderProps> = ({ onSearch, totalStreamers, liveStreamers, onRequestStreamer }) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleSearch = (e: React.FormEvent) => {
@@ -58,6 +59,15 @@ const Header: React.FC<HeaderProps> = ({ onSearch, totalStreamers, liveStreamers
               <span className="stat-label">زنده</span>
             </div>
           </div>
+          
+          <button 
+            type="button" 
+            className="request-streamer-btn"
+            onClick={onRequestStreamer}
+            title="درخواست اضافه کردن استریمر جدید"
+          >
+            ➕ درخواست استریمر
+          </button>
         </div>
       </div>
     </header>
