@@ -13,8 +13,7 @@ function App() {
   const [streamers, setStreamers] = useState<Streamer[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [lastUpdated, setLastUpdated] = useState(new Date())
-  const [apiStatus, setApiStatus] = useState<'loading' | 'success' | 'error'>('loading')
+
   const [loadingProgress, setLoadingProgress] = useState({ current: 0, total: 0, failed: 0, retrying: 0 })
   const [showStreamerRequest, setShowStreamerRequest] = useState(false)
 
@@ -26,7 +25,6 @@ function App() {
     try {
       setLoading(true)
       setError(null)
-      setApiStatus('loading')
       setStreamers([])
       
       // Get streamer IDs
@@ -129,13 +127,10 @@ function App() {
         console.log(`   Failed usernames: ${failedList.join(', ')}`)
       }
       
-      setLastUpdated(new Date())
-      setApiStatus('success')
       setLoadingProgress({ current: 0, total: 0, failed: 0, retrying: 0 })
       
     } catch (err) {
       setError('خطا در بارگذاری استریمرها')
-      setApiStatus('error')
       console.error('Failed to load streamers:', err)
     } finally {
       setLoading(false)
@@ -195,8 +190,6 @@ function App() {
             <ApiInfo 
               totalStreamers={totalStreamers}
               liveStreamers={liveStreamers}
-              lastUpdated={lastUpdated}
-              apiStatus={apiStatus}
             />
             <StreamerRequest 
               isOpen={showStreamerRequest}
