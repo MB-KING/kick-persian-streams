@@ -35,12 +35,14 @@
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
+  font-family: 'Vazirmatn', system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
 .filter-label input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   accent-color: #00ff88;
+  border-radius: 4px;
 }
 
 .sort-controls {
@@ -56,26 +58,38 @@
   color: #cccccc;
   font-size: 14px;
   font-weight: 500;
+  font-family: 'Vazirmatn', system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
 .sort-select {
   background: #2a2a2a;
   border: 1px solid #3a3a3a;
   color: #ffffff;
-  padding: 6px 12px;
-  border-radius: 4px;
+  padding: 10px 16px;
+  border-radius: 8px;
   font-size: 14px;
+  font-family: 'Vazirmatn', system-ui, Avenir, Helvetica, Arial, sans-serif;
   cursor: pointer;
   outline: none;
+  height: 44px;
+  min-width: 120px;
+  transition: all 0.3s ease;
 }
 
 .sort-select:focus {
   border-color: #00ff88;
+  box-shadow: 0 0 0 2px rgba(0, 255, 136, 0.2);
+}
+
+.sort-select:hover {
+  border-color: #555;
 }
 
 .sort-select option {
   background: #2a2a2a;
   color: #ffffff;
+  font-family: 'Vazirmatn', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  padding: 8px;
 }
 
 
@@ -184,12 +198,14 @@
   
   .filter-label,
   .sort-label {
-    font-size: 13px;
+    font-size: 12px;
   }
   
   .sort-select {
-    font-size: 13px;
-    padding: 4px 8px;
+    font-size: 12px;
+    padding: 6px 10px;
+    height: 36px;
+    min-width: 90px;
   }
   
   .streamer-grid {
