@@ -4,6 +4,7 @@ import Header from './components/Header'
 import StreamerList from './components/StreamerList'
 import Loading from './components/Loading'
 import ApiInfo from './components/ApiInfo'
+import StreamerRequest from './components/StreamerRequest'
 import type { Streamer } from './types/Streamer'
 import { kickApiService } from './services/kickApi'
 
@@ -159,6 +160,7 @@ function App() {
               lastUpdated={lastUpdated}
               apiStatus={apiStatus}
             />
+            <StreamerRequest />
             <StreamerList 
               streamers={streamers}
               filter={searchQuery}
